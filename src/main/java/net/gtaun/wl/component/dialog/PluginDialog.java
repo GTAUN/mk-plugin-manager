@@ -8,12 +8,12 @@ import net.gtaun.util.event.EventManager;
 import net.gtaun.wl.common.WlPlugin;
 import net.gtaun.wl.common.dialog.AbstractListDialog;
 
-public class WlPluginDialog extends AbstractListDialog
+public class PluginDialog extends AbstractListDialog
 {
-	private WlPlugin plugin;
+	private Plugin plugin;
 	
 	
-	public WlPluginDialog(WlPlugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
+	public PluginDialog(Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
 	{
 		super(player, shoebill, eventManager);
 		this.plugin = plugin;
@@ -23,10 +23,11 @@ public class WlPluginDialog extends AbstractListDialog
 	public void show()
 	{
 		Class<? extends Plugin> clazz = plugin.getClass();
-		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]";
-		final String pluginName = clazz.getSimpleName() + Color.GRAY.toEmbeddingString() + " (" + clazz.getPackage().getName() + ")";
-		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")";
-		final String item = enableMark + " " + pluginName + " " + packageName;
+		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
+		final String pluginName = clazz.getSimpleName();
+		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
+		final String pluginFullName = pluginName + " " + packageName;
+		final String item = enableMark + " " + pluginFullName;
 		setCaption("Plugin - " + item);
 		
 		dialogListItems.clear();
@@ -39,12 +40,12 @@ public class WlPluginDialog extends AbstractListDialog
 				try
 				{
 					plugin.enable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginName + " enabled.");
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enabled.");
 				}
 				catch (Throwable e)
 				{
 					e.printStackTrace();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginName + " enable failed.");
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enable failed.");
 				}
 
 				destroy();
@@ -59,25 +60,26 @@ public class WlPluginDialog extends AbstractListDialog
 				try
 				{
 					plugin.disable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginName + " disabled.");
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disabled.");
 				}
 				catch (Throwable e)
 				{
 					e.printStackTrace();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginName + " disable failed.");
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disable failed.");
 				}
 				
 				destroy();
 			}
 		});
 		
-		dialogListItems.add(new DialogListItem("Configure")
+		if (plugin instanceof WlPlugin) dialogListItems.add(new DialogListItem("Configure")
 		{
 			@Override
 			public void onItemSelect()
 			{
-				player.sendMessage(Color.WHITE, "[CM] " + pluginName + " configuring...");
-				plugin.configure(player);
+				WlPlugin wlPlugin = (WlPlugin) plugin;
+				player.sendMessage(Color.WHITE, "[CM] " + item + " configuring...");
+				wlPlugin.configure(player);
 				destroy();
 			}
 		});

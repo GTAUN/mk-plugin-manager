@@ -54,28 +54,20 @@ public class PluginListDialog extends AbstractPageListDialog
 		for (final Plugin plugin : plugins)
 		{
 			Class<? extends Plugin> clazz = plugin.getClass();
-			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]";
+			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
 			String wlPluginMark = plugin instanceof WlPlugin ? "[WL]" : "";
 			String pluginName = clazz.getSimpleName();
-			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")";
+			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
+			
 			String item = enableMark + " " + wlPluginMark + pluginName + " " + packageName;
 			
-			if (plugin instanceof WlPlugin) dialogListItems.add(new DialogListItem(item)
+			dialogListItems.add(new DialogListItem(item)
 			{
 				@Override
 				public void onItemSelect()
 				{
-					new WlPluginDialog((WlPlugin) plugin, player, shoebill, rootEventManager).show();
+					new PluginDialog(plugin, player, shoebill, rootEventManager).show();
 					destroy();
-				}
-			});
-			else dialogListItems.add(new DialogListItem(item)
-			{
-				@Override
-				public void onItemSelect()
-				{
-					player.sendMessage(Color.YELLOW, "[CM] This plugin does not support configure.");
-					show();
 				}
 			});
 		}
