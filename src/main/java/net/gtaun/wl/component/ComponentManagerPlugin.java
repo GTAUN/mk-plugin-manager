@@ -13,7 +13,6 @@
 
 package net.gtaun.wl.component;
 
-import net.gtaun.util.event.EventManager;
 import net.gtaun.wl.common.WlPlugin;
 import net.gtaun.wl.component.impl.ComponentManagerServiceImpl;
 
@@ -41,8 +40,7 @@ public class ComponentManagerPlugin extends WlPlugin
 	@Override
 	protected void onEnable() throws Throwable
 	{
-		EventManager eventManager = getEventManager();
-		service = new ComponentManagerServiceImpl(eventManager);
+		service = new ComponentManagerServiceImpl(getShoebill(), getEventManager());
 		registerService(ComponentManagerService.class, service);
 		
 		LOGGER.info(getDescription().getName() + " " + getDescription().getVersion() + " Enabled.");

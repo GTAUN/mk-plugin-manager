@@ -13,6 +13,7 @@
 
 package net.gtaun.wl.component;
 
+import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.service.Service;
 
 /**
@@ -22,5 +23,8 @@ import net.gtaun.shoebill.service.Service;
  */
 public interface ComponentManagerService extends Service
 {
+	void setCommandEnabled(boolean enable);
+	void setCommandOperation(String op);
 	
+	void showPluginManagerDialog(Player player);
 }
