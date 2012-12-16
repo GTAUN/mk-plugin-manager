@@ -13,7 +13,7 @@ public class PluginDialog extends AbstractListDialog
 	private Plugin plugin;
 	
 	
-	public PluginDialog(Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
+	public PluginDialog(PluginListDialog pluginListDialog, Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
 	{
 		super(player, shoebill, eventManager);
 		this.plugin = plugin;
@@ -47,7 +47,8 @@ public class PluginDialog extends AbstractListDialog
 					e.printStackTrace();
 					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enable failed.");
 				}
-
+				
+				new PluginListDialog(player, shoebill, rootEventManager).show(); 
 				destroy();
 			}
 		});
@@ -67,7 +68,32 @@ public class PluginDialog extends AbstractListDialog
 					e.printStackTrace();
 					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disable failed.");
 				}
-				
+
+				new PluginListDialog(player, shoebill, rootEventManager).show(); 
+				destroy();
+			}
+		});
+		
+		if (plugin.isEnabled()) dialogListItems.add(new DialogListItem("Restart")
+		{
+			@Override
+			public void onItemSelect()
+			{
+				try
+				{
+					plugin.disable();
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disabled.");
+					
+					plugin.enable();
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enabled.");
+				}
+				catch (Throwable e)
+				{
+					e.printStackTrace();
+					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " restart failed.");
+				}
+
+				new PluginListDialog(player, shoebill, rootEventManager).show(); 
 				destroy();
 			}
 		});

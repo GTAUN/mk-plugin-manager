@@ -66,7 +66,7 @@ public class PluginListDialog extends AbstractPageListDialog
 				@Override
 				public void onItemSelect()
 				{
-					new PluginDialog(plugin, player, shoebill, rootEventManager).show();
+					new PluginDialog(PluginListDialog.this, plugin, player, shoebill, rootEventManager).show();
 					destroy();
 				}
 			});
