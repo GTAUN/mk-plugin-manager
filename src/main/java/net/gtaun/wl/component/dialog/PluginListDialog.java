@@ -54,7 +54,7 @@ public class PluginListDialog extends AbstractPageListDialog
 		for (final Plugin plugin : plugins)
 		{
 			Class<? extends Plugin> clazz = plugin.getClass();
-			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
+			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" + Color.WHITE.toEmbeddingString() : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
 			String wlPluginMark = plugin instanceof WlPlugin ? "[WL]" : "";
 			String pluginName = clazz.getSimpleName();
 			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();

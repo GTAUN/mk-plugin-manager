@@ -23,7 +23,7 @@ public class PluginDialog extends AbstractListDialog
 	public void show()
 	{
 		Class<? extends Plugin> clazz = plugin.getClass();
-		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
+		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" + Color.WHITE.toEmbeddingString() : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
 		final String pluginName = clazz.getSimpleName();
 		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
 		final String pluginFullName = pluginName + " " + packageName;
