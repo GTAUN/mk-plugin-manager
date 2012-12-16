@@ -42,21 +42,40 @@ public class PluginListDialog extends AbstractPageListDialog
 		ResourceManager resourceManager = shoebill.getResourceManager();
 		Collection<Plugin> plugins = resourceManager.getPlugins();
 		
+		int enabledPlugins = 0;
+		for (Plugin plugin : plugins)
+		{
+			if (plugin.isEnabled()) enabledPlugins++;
+		}
+		
+		setCaption("WL Plugin List - Enabled: " + enabledPlugins + ", Total: " + plugins.size());
+		
 		dialogListItems.clear();
 		for (final Plugin plugin : plugins)
 		{
 			Class<? extends Plugin> clazz = plugin.getClass();
 			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]";
-			String pluginName = clazz.getSimpleName() + Color.GRAY + " (" + clazz.getPackage().getName() + ")";
-			String item = enableMark + pluginName;
+			String wlPluginMark = plugin instanceof WlPlugin ? "[WL]" : "";
+			String pluginName = clazz.getSimpleName();
+			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")";
+			String item = enableMark + " " + wlPluginMark + pluginName + " " + packageName;
 			
 			if (plugin instanceof WlPlugin) dialogListItems.add(new DialogListItem(item)
 			{
 				@Override
 				public void onItemSelect()
 				{
-					new WlPluginDialog((WlPlugin) plugin, player, shoebill, rootEventManager);
+					new WlPluginDialog((WlPlugin) plugin, player, shoebill, rootEventManager).show();
 					destroy();
+				}
+			});
+			else dialogListItems.add(new DialogListItem(item)
+			{
+				@Override
+				public void onItemSelect()
+				{
+					player.sendMessage(Color.YELLOW, "[CM] This plugin does not support configure.");
+					show();
 				}
 			});
 		}

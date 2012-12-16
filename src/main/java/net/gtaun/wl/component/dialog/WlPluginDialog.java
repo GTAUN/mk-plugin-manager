@@ -10,21 +10,23 @@ import net.gtaun.wl.common.dialog.AbstractListDialog;
 
 public class WlPluginDialog extends AbstractListDialog
 {
-	protected WlPlugin plugin;
+	private WlPlugin plugin;
 	
 	
 	public WlPluginDialog(WlPlugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
 	{
 		super(player, shoebill, eventManager);
+		this.plugin = plugin;
 	}
 	
 	@Override
 	public void show()
 	{
-		final Class<? extends Plugin> clazz = plugin.getClass();
-		final String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]";
-		final String pluginName = clazz.getSimpleName() + Color.GRAY + " (" + clazz.getPackage().getName() + ")";
-		final String item = enableMark + pluginName;
+		Class<? extends Plugin> clazz = plugin.getClass();
+		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" : Color.RED.toEmbeddingString() + "[D]";
+		final String pluginName = clazz.getSimpleName() + Color.GRAY.toEmbeddingString() + " (" + clazz.getPackage().getName() + ")";
+		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")";
+		final String item = enableMark + " " + pluginName + " " + packageName;
 		setCaption("Plugin - " + item);
 		
 		dialogListItems.clear();

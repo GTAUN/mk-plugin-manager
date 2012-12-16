@@ -104,6 +104,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService
 				{
 					player.sendMessage(Color.RED, "You are not authorized to use this command.");
 					event.setProcessed();
+					return;
 				}
 				
 				showPluginManagerDialog(player);
