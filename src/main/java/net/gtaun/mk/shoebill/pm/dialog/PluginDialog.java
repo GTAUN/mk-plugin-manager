@@ -58,12 +58,12 @@ public class PluginDialog extends AbstractListDialog
 				try
 				{
 					plugin.enable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enabled.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Enabled.");
 				}
 				catch (Throwable e)
 				{
 					e.printStackTrace();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enable failed.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Enable failed.");
 				}
 				
 				new PluginListDialog(player, shoebill, rootEventManager).show(); 
@@ -79,12 +79,12 @@ public class PluginDialog extends AbstractListDialog
 				try
 				{
 					plugin.disable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disabled.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Disabled.");
 				}
 				catch (Throwable e)
 				{
 					e.printStackTrace();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disable failed.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Disable failed.");
 				}
 
 				new PluginListDialog(player, shoebill, rootEventManager).show(); 
@@ -92,7 +92,7 @@ public class PluginDialog extends AbstractListDialog
 			}
 		});
 		
-		if (plugin.isEnabled()) dialogListItems.add(new DialogListItem("Restart")
+		if (plugin.isEnabled()) dialogListItems.add(new DialogListItem("Re-enable")
 		{
 			@Override
 			public void onItemSelect()
@@ -100,15 +100,15 @@ public class PluginDialog extends AbstractListDialog
 				try
 				{
 					plugin.disable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " disabled.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Disabled.");
 					
 					plugin.enable();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " enabled.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Re-enabled.");
 				}
 				catch (Throwable e)
 				{
 					e.printStackTrace();
-					player.sendMessage(Color.WHITE, "[CM] " + pluginFullName + " restart failed.");
+					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Re-enable failed.");
 				}
 
 				new PluginListDialog(player, shoebill, rootEventManager).show(); 
@@ -122,7 +122,7 @@ public class PluginDialog extends AbstractListDialog
 			public void onItemSelect()
 			{
 				ConfigurablePlugin wlPlugin = (ConfigurablePlugin) plugin;
-				player.sendMessage(Color.WHITE, "[CM] " + item + " configuring...");
+				player.sendMessage(Color.WHITE, "[MKPM] " + item + " Configuring...");
 				wlPlugin.configure(player);
 				destroy();
 			}

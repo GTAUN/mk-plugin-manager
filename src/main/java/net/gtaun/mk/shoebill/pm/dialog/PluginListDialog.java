@@ -16,7 +16,6 @@ package net.gtaun.mk.shoebill.pm.dialog;
 import java.util.Collection;
 
 import net.gtaun.shoebill.Shoebill;
-import net.gtaun.shoebill.common.ConfigurablePlugin;
 import net.gtaun.shoebill.common.dialog.AbstractPageListDialog;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
@@ -48,18 +47,17 @@ public class PluginListDialog extends AbstractPageListDialog
 			if (plugin.isEnabled()) enabledPlugins++;
 		}
 		
-		setCaption("WL Plugin List - Enabled: " + enabledPlugins + ", Total: " + plugins.size());
+		setCaption("MK's Plugin Manager - Plugin List - Enabled: " + enabledPlugins + ", Total: " + plugins.size());
 		
 		dialogListItems.clear();
 		for (final Plugin plugin : plugins)
 		{
 			Class<? extends Plugin> clazz = plugin.getClass();
 			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" + Color.WHITE.toEmbeddingString() : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
-			String wlPluginMark = plugin instanceof ConfigurablePlugin ? "[WL]" : "";
 			String pluginName = clazz.getSimpleName();
 			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
 			
-			String item = enableMark + " " + wlPluginMark + pluginName + " " + packageName;
+			String item = enableMark + " " + pluginName + " " + packageName;
 			
 			dialogListItems.add(new DialogListItem(item)
 			{

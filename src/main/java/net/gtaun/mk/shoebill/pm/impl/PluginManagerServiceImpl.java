@@ -39,7 +39,7 @@ public class PluginManagerServiceImpl implements PluginManagerService
 	private final ManagedEventManager eventManager;
 
 	private boolean isCommandEnabled = true;
-	private String commandOperation = "/cm";
+	private String commandOperation = "/pm";
 	
 	
 	public PluginManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager)
