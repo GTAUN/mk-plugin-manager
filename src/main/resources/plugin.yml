@@ -1,5 +1,5 @@
-class: net.gtaun.wl.component.ComponentManagerPlugin
-name: WL Component Manager Plugin
+class: net.gtaun.mk.shoebill.pm.PluginManagerPlugin
+name: MK's Shoebill Plugin Manager
 version: 0.1.0-SNAPSHOT
 buildNumber: ${build.number}
 buildDate: ${build.timestamp}

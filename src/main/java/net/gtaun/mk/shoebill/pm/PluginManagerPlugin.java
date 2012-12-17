@@ -11,28 +11,28 @@
  * GNU General Public License for more details.
  */
 
-package net.gtaun.wl.component;
+package net.gtaun.mk.shoebill.pm;
 
-import net.gtaun.wl.common.WlPlugin;
-import net.gtaun.wl.component.impl.ComponentManagerServiceImpl;
+import net.gtaun.mk.common.ConfigurablePlugin;
+import net.gtaun.mk.shoebill.pm.impl.PluginManagerServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * 新未来世界组件管理器插件主类。
+ * 插件管理器主类。
  * 
  * @author MK124
  */
-public class ComponentManagerPlugin extends WlPlugin
+public class PluginManagerPlugin extends ConfigurablePlugin
 {
-	public static final Logger LOGGER = LoggerFactory.getLogger(ComponentManagerPlugin.class);
+	public static final Logger LOGGER = LoggerFactory.getLogger(PluginManagerPlugin.class);
 	
 	
-	private ComponentManagerServiceImpl service;
+	private PluginManagerServiceImpl service;
 	
 	
-	public ComponentManagerPlugin()
+	public PluginManagerPlugin()
 	{
 		
 	}
@@ -40,8 +40,8 @@ public class ComponentManagerPlugin extends WlPlugin
 	@Override
 	protected void onEnable() throws Throwable
 	{
-		service = new ComponentManagerServiceImpl(getShoebill(), getEventManager());
-		registerService(ComponentManagerService.class, service);
+		service = new PluginManagerServiceImpl(getShoebill(), getEventManager());
+		registerService(PluginManagerService.class, service);
 		
 		LOGGER.info(getDescription().getName() + " " + getDescription().getVersion() + " Enabled.");
 	}
@@ -49,7 +49,7 @@ public class ComponentManagerPlugin extends WlPlugin
 	@Override
 	protected void onDisable() throws Throwable
 	{
-		unregisterService(ComponentManagerService.class);
+		unregisterService(PluginManagerService.class);
 		service.uninitialize();
 		service = null;
 		

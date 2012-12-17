@@ -11,18 +11,18 @@
  * GNU General Public License for more details.
  */
 
-package net.gtaun.wl.component.dialog;
+package net.gtaun.mk.shoebill.pm.dialog;
 
 import java.util.Collection;
 
+import net.gtaun.mk.common.ConfigurablePlugin;
+import net.gtaun.mk.common.dialog.AbstractPageListDialog;
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.resource.Plugin;
 import net.gtaun.shoebill.resource.ResourceManager;
 import net.gtaun.util.event.EventManager;
-import net.gtaun.wl.common.WlPlugin;
-import net.gtaun.wl.common.dialog.AbstractPageListDialog;
 
 /**
  * 插件列表对话框。
@@ -55,7 +55,7 @@ public class PluginListDialog extends AbstractPageListDialog
 		{
 			Class<? extends Plugin> clazz = plugin.getClass();
 			String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" + Color.WHITE.toEmbeddingString() : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
-			String wlPluginMark = plugin instanceof WlPlugin ? "[WL]" : "";
+			String wlPluginMark = plugin instanceof ConfigurablePlugin ? "[WL]" : "";
 			String pluginName = clazz.getSimpleName();
 			String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
 			

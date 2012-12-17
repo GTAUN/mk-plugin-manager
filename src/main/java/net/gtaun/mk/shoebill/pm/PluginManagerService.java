@@ -11,17 +11,17 @@
  * GNU General Public License for more details.
  */
 
-package net.gtaun.wl.component;
+package net.gtaun.mk.shoebill.pm;
 
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.service.Service;
 
 /**
- * 新未来世界组件管理器服务。
+ * 插件管理器服务接口。
  * 
  * @author MK124
  */
-public interface ComponentManagerService extends Service
+public interface PluginManagerService extends Service
 {
 	void setCommandEnabled(boolean enable);
 	void setCommandOperation(String op);

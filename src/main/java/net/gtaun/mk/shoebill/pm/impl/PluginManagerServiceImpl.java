@@ -11,12 +11,14 @@
  * GNU General Public License for more details.
  */
 
-package net.gtaun.wl.component.impl;
+package net.gtaun.mk.shoebill.pm.impl;
 
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import net.gtaun.mk.shoebill.pm.PluginManagerService;
+import net.gtaun.mk.shoebill.pm.dialog.PluginListDialog;
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.event.PlayerEventHandler;
@@ -25,15 +27,13 @@ import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
 import net.gtaun.util.event.ManagedEventManager;
 import net.gtaun.util.event.EventManager.HandlerPriority;
-import net.gtaun.wl.component.ComponentManagerService;
-import net.gtaun.wl.component.dialog.PluginListDialog;
 
 /**
- * 新未来世界组件管理器服务实现类。
+ * 插件管理器服务实现类。
  * 
  * @author MK124
  */
-public class ComponentManagerServiceImpl implements ComponentManagerService
+public class PluginManagerServiceImpl implements PluginManagerService
 {
 	private final Shoebill shoebill;
 	private final ManagedEventManager eventManager;
@@ -42,7 +42,7 @@ public class ComponentManagerServiceImpl implements ComponentManagerService
 	private String commandOperation = "/cm";
 	
 	
-	public ComponentManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager)
+	public PluginManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager)
 	{
 		this.shoebill = shoebill;
 		eventManager = new ManagedEventManager(rootEventManager);

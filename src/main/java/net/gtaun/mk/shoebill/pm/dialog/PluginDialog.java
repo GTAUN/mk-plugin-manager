@@ -1,13 +1,31 @@
-package net.gtaun.wl.component.dialog;
+/**
+ * Copyright (C) 2012 MK124
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
 
+package net.gtaun.mk.shoebill.pm.dialog;
+
+import net.gtaun.mk.common.ConfigurablePlugin;
+import net.gtaun.mk.common.dialog.AbstractListDialog;
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.resource.Plugin;
 import net.gtaun.util.event.EventManager;
-import net.gtaun.wl.common.WlPlugin;
-import net.gtaun.wl.common.dialog.AbstractListDialog;
 
+/**
+ * 插件列表对话框。
+ * 
+ * @author MK124
+ */
 public class PluginDialog extends AbstractListDialog
 {
 	private Plugin plugin;
@@ -98,12 +116,12 @@ public class PluginDialog extends AbstractListDialog
 			}
 		});
 		
-		if (plugin instanceof WlPlugin) dialogListItems.add(new DialogListItem("Configure")
+		if (plugin instanceof ConfigurablePlugin) dialogListItems.add(new DialogListItem("Configure")
 		{
 			@Override
 			public void onItemSelect()
 			{
-				WlPlugin wlPlugin = (WlPlugin) plugin;
+				ConfigurablePlugin wlPlugin = (ConfigurablePlugin) plugin;
 				player.sendMessage(Color.WHITE, "[CM] " + item + " configuring...");
 				wlPlugin.configure(player);
 				destroy();
