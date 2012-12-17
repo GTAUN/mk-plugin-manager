@@ -13,9 +13,9 @@
 
 package net.gtaun.mk.shoebill.pm.dialog;
 
-import net.gtaun.mk.common.ConfigurablePlugin;
-import net.gtaun.mk.common.dialog.AbstractListDialog;
 import net.gtaun.shoebill.Shoebill;
+import net.gtaun.shoebill.common.ConfigurablePlugin;
+import net.gtaun.shoebill.common.dialog.AbstractListDialog;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.resource.Plugin;

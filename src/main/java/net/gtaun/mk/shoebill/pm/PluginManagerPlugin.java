@@ -13,8 +13,8 @@
 
 package net.gtaun.mk.shoebill.pm;
 
-import net.gtaun.mk.common.ConfigurablePlugin;
 import net.gtaun.mk.shoebill.pm.impl.PluginManagerServiceImpl;
+import net.gtaun.shoebill.common.ConfigurablePlugin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
