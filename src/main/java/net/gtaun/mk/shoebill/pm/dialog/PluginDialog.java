@@ -46,7 +46,7 @@ public class PluginDialog extends AbstractListDialog
 		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
 		final String pluginFullName = pluginName + " " + packageName;
 		final String item = enableMark + " " + pluginFullName;
-		setCaption("Plugin - " + item);
+		caption = "Plugin - " + item;
 		
 		dialogListItems.clear();
 		

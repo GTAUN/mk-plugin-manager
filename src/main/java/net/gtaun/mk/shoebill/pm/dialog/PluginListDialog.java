@@ -47,7 +47,7 @@ public class PluginListDialog extends AbstractPageListDialog
 			if (plugin.isEnabled()) enabledPlugins++;
 		}
 		
-		setCaption("MK's Plugin Manager - Plugin List - Enabled: " + enabledPlugins + ", Total: " + plugins.size());
+		caption = "MK's Plugin Manager - Plugin List - Enabled: " + enabledPlugins + ", Total: " + plugins.size();
 		
 		dialogListItems.clear();
 		for (final Plugin plugin : plugins)
