@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 MK124
+ * Copyright (C) 2012-2013 MK124
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -17,6 +17,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import net.gtaun.mk.shoebill.pm.PluginManagerPlugin;
 import net.gtaun.mk.shoebill.pm.PluginManagerService;
 import net.gtaun.mk.shoebill.pm.dialog.PluginListDialog;
 import net.gtaun.shoebill.Shoebill;
@@ -37,15 +38,18 @@ public class PluginManagerServiceImpl implements PluginManagerService
 {
 	private final Shoebill shoebill;
 	private final ManagedEventManager eventManager;
+	
+	private final PluginManagerPlugin plugin;
 
 	private boolean isCommandEnabled = true;
 	private String commandOperation = "/pm";
 	
 	
-	public PluginManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager)
+	public PluginManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager, PluginManagerPlugin plugin)
 	{
 		this.shoebill = shoebill;
-		eventManager = new ManagedEventManager(rootEventManager);
+		this.eventManager = new ManagedEventManager(rootEventManager);
+		this.plugin = plugin;
 		
 		initialize();
 	}
@@ -75,7 +79,7 @@ public class PluginManagerServiceImpl implements PluginManagerService
 	@Override
 	public void showPluginManagerDialog(Player player)
 	{
-		new PluginListDialog(player, shoebill, eventManager).show();
+		new PluginListDialog(player, shoebill, eventManager, null, plugin).show();
 	}
 	
 	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()

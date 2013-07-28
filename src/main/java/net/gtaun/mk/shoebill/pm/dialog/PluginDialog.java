@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2012 MK124
+ * Copyright (C) 2012-2013 MK124
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 as
@@ -15,6 +15,7 @@ package net.gtaun.mk.shoebill.pm.dialog;
 
 import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.common.ConfigurablePlugin;
+import net.gtaun.shoebill.common.dialog.AbstractDialog;
 import net.gtaun.shoebill.common.dialog.AbstractListDialog;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
@@ -31,9 +32,9 @@ public class PluginDialog extends AbstractListDialog
 	private Plugin plugin;
 	
 	
-	public PluginDialog(PluginListDialog pluginListDialog, Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager)
+	public PluginDialog(Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager, AbstractDialog parentDialog)
 	{
-		super(player, shoebill, eventManager);
+		super(player, shoebill, eventManager, parentDialog);
 		this.plugin = plugin;
 	}
 	
@@ -46,7 +47,7 @@ public class PluginDialog extends AbstractListDialog
 		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
 		final String pluginFullName = pluginName + " " + packageName;
 		final String item = enableMark + " " + pluginFullName;
-		caption = "Plugin - " + item;
+		caption = "Plugin: " + item;
 		
 		dialogListItems.clear();
 		
@@ -66,8 +67,7 @@ public class PluginDialog extends AbstractListDialog
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Enable failed.");
 				}
 				
-				new PluginListDialog(player, shoebill, rootEventManager).show(); 
-				destroy();
+				showParentDialog();
 			}
 		});
 		
@@ -87,8 +87,7 @@ public class PluginDialog extends AbstractListDialog
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Disable failed.");
 				}
 
-				new PluginListDialog(player, shoebill, rootEventManager).show(); 
-				destroy();
+				showParentDialog();
 			}
 		});
 		
@@ -111,8 +110,7 @@ public class PluginDialog extends AbstractListDialog
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Re-enable failed.");
 				}
 
-				new PluginListDialog(player, shoebill, rootEventManager).show(); 
-				destroy();
+				showParentDialog();
 			}
 		});
 		
@@ -124,10 +122,15 @@ public class PluginDialog extends AbstractListDialog
 				ConfigurablePlugin wlPlugin = (ConfigurablePlugin) plugin;
 				player.sendMessage(Color.WHITE, "[MKPM] " + item + " Configuring...");
 				wlPlugin.configure(player);
-				destroy();
 			}
 		});
 		
 		super.show();
+	}
+	
+	@Override
+	protected void onClickCancel()
+	{
+		showParentDialog();
 	}
 }

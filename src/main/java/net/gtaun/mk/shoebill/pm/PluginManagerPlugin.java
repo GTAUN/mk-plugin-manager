@@ -40,7 +40,7 @@ public class PluginManagerPlugin extends ConfigurablePlugin
 	@Override
 	protected void onEnable() throws Throwable
 	{
-		service = new PluginManagerServiceImpl(getShoebill(), getEventManager());
+		service = new PluginManagerServiceImpl(getShoebill(), getEventManager(), this);
 		registerService(PluginManagerService.class, service);
 		
 		LOGGER.info(getDescription().getName() + " " + getDescription().getVersion() + " Enabled.");
