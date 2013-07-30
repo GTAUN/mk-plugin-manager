@@ -77,19 +77,19 @@ public class PluginListDialog extends AbstractPageListDialog
 			});
 		}
 		
-		dialogListItems.add(new DialogListItem("About")
+		dialogListItems.add(new DialogListItem("About MK's PluginManager")
 		{
 			@Override
 			public void onItemSelect()
 			{
 				ResourceDescription desc = plugin.getDescription();
 				
-				final String msgboxCaption = String.format("About MK's PluginManager");
+				final String msgboxCaption = "About MK's PluginManager";
 				String format =
 					"Version: %1$s (Build %2$d)\n" +
 					"Build date: %3$s\n" +
 					"Developer: mk124\n\n" +
-					"Copyright (C) 2012-2013 MK124" +
+					"Copyright (C) 2012-2013 MK124\n\n" +
 					"This program is free software; you can redistribute it and/or\n" +
 					"modify it under the terms of the GNU General Public Licenseas\n" +
 					"published by the Free Software Foundation; either version 2\n" +
