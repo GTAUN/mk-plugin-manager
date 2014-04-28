@@ -1,14 +1,18 @@
 /**
- * Copyright (C) 2012-2013 MK124
+ * Copyright (C) 2012-2014 MK124
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package net.gtaun.mk.shoebill.pm.impl;
@@ -20,24 +24,15 @@ import java.util.Queue;
 import net.gtaun.mk.shoebill.pm.PluginManagerPlugin;
 import net.gtaun.mk.shoebill.pm.PluginManagerService;
 import net.gtaun.mk.shoebill.pm.dialog.PluginListDialog;
-import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.data.Color;
-import net.gtaun.shoebill.event.PlayerEventHandler;
 import net.gtaun.shoebill.event.player.PlayerCommandEvent;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.util.event.EventManager;
-import net.gtaun.util.event.ManagedEventManager;
-import net.gtaun.util.event.EventManager.HandlerPriority;
+import net.gtaun.util.event.EventManagerNode;
 
-/**
- * 插件管理器服务实现类。
- * 
- * @author MK124
- */
 public class PluginManagerServiceImpl implements PluginManagerService
 {
-	private final Shoebill shoebill;
-	private final ManagedEventManager eventManager;
+	private final EventManagerNode eventManager;
 	
 	private final PluginManagerPlugin plugin;
 
@@ -45,10 +40,9 @@ public class PluginManagerServiceImpl implements PluginManagerService
 	private String commandOperation = "/pm";
 	
 	
-	public PluginManagerServiceImpl(Shoebill shoebill, EventManager rootEventManager, PluginManagerPlugin plugin)
+	public PluginManagerServiceImpl(EventManager rootEventManager, PluginManagerPlugin plugin)
 	{
-		this.shoebill = shoebill;
-		this.eventManager = new ManagedEventManager(rootEventManager);
+		this.eventManager = rootEventManager.createChildNode();
 		this.plugin = plugin;
 		
 		initialize();
@@ -56,7 +50,37 @@ public class PluginManagerServiceImpl implements PluginManagerService
 	
 	private void initialize()
 	{
-		eventManager.registerHandler(PlayerCommandEvent.class, playerEventHandler, HandlerPriority.NORMAL);
+		eventManager.registerHandler(PlayerCommandEvent.class, (e) ->
+		{
+			if (isCommandEnabled == false) return;
+			
+			Player player = e.getPlayer();
+			
+			String command = e.getCommand();
+			String[] splits = command.split(" ", 2);
+			
+			String operation = splits[0].toLowerCase();
+			Queue<String> args = new LinkedList<>();
+			
+			if (splits.length > 1)
+			{
+				String[] argsArray = splits[1].split(" ");
+				args.addAll(Arrays.asList(argsArray));
+			}
+			
+			if (operation.equals(commandOperation))
+			{
+				if (player.isAdmin() == false)
+				{
+					player.sendMessage(Color.RED, "You are not authorized to use this command.");
+					e.setProcessed();
+					return;
+				}
+				
+				showPluginManagerDialog(player);
+				e.setProcessed();
+			}
+		});
 	}
 	
 	public void uninitialize()
@@ -79,41 +103,6 @@ public class PluginManagerServiceImpl implements PluginManagerService
 	@Override
 	public void showPluginManagerDialog(Player player)
 	{
-		new PluginListDialog(player, shoebill, eventManager, null, plugin).show();
+		new PluginListDialog(player, eventManager, null, plugin).show();
 	}
-	
-	private PlayerEventHandler playerEventHandler = new PlayerEventHandler()
-	{
-		protected void onPlayerCommand(PlayerCommandEvent event)
-		{
-			if (isCommandEnabled == false) return;
-			
-			Player player = event.getPlayer();
-			
-			String command = event.getCommand();
-			String[] splits = command.split(" ", 2);
-			
-			String operation = splits[0].toLowerCase();
-			Queue<String> args = new LinkedList<>();
-			
-			if (splits.length > 1)
-			{
-				String[] argsArray = splits[1].split(" ");
-				args.addAll(Arrays.asList(argsArray));
-			}
-			
-			if (operation.equals(commandOperation))
-			{
-				if (player.isAdmin() == false)
-				{
-					player.sendMessage(Color.RED, "You are not authorized to use this command.");
-					event.setProcessed();
-					return;
-				}
-				
-				showPluginManagerDialog(player);
-				event.setProcessed();
-			}
-		}
-	};
 }

@@ -1,60 +1,46 @@
 /**
- * Copyright (C) 2012-2013 MK124
+ * Copyright (C) 2012-2014 MK124
  *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License version 2 as
- * published by the Free Software Foundation.
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
 package net.gtaun.mk.shoebill.pm.dialog;
 
-import net.gtaun.shoebill.Shoebill;
 import net.gtaun.shoebill.common.ConfigurablePlugin;
 import net.gtaun.shoebill.common.dialog.AbstractDialog;
-import net.gtaun.shoebill.common.dialog.AbstractListDialog;
+import net.gtaun.shoebill.common.dialog.ListDialog;
 import net.gtaun.shoebill.data.Color;
 import net.gtaun.shoebill.object.Player;
 import net.gtaun.shoebill.resource.Plugin;
 import net.gtaun.util.event.EventManager;
 
-/**
- * 插件列表对话框。
- * 
- * @author MK124
- */
-public class PluginDialog extends AbstractListDialog
+public class PluginDialog
 {
-	private Plugin plugin;
-	
-	
-	public PluginDialog(Plugin plugin, Player player, Shoebill shoebill, EventManager eventManager, AbstractDialog parentDialog)
-	{
-		super(player, shoebill, eventManager, parentDialog);
-		this.plugin = plugin;
-	}
-	
-	@Override
-	public void show()
+	public static ListDialog create(Player player, EventManager eventManager, AbstractDialog parent, Plugin plugin)
 	{
 		Class<? extends Plugin> clazz = plugin.getClass();
 		String enableMark = plugin.isEnabled() ? Color.GREEN.toEmbeddingString() + "[E]" + Color.WHITE.toEmbeddingString() : Color.RED.toEmbeddingString() + "[D]" + Color.WHITE.toEmbeddingString();
-		final String pluginName = clazz.getSimpleName();
-		final String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
-		final String pluginFullName = pluginName + " " + packageName;
-		final String item = enableMark + " " + pluginFullName;
-		caption = "Plugin: " + item;
+		String pluginName = clazz.getSimpleName();
+		String packageName = Color.GRAY.toEmbeddingString()  + "(" + clazz.getPackage().getName() + ")" + Color.WHITE.toEmbeddingString();
+		String pluginFullName = pluginName + " " + packageName;
+		String item = enableMark + " " + pluginFullName;
 		
-		dialogListItems.clear();
-		
-		if (plugin.isEnabled() == false) dialogListItems.add(new DialogListItem("Enable")
-		{
-			@Override
-			public void onItemSelect()
+		return ListDialog.create(player, eventManager)
+			.parentDialog(parent)
+			.caption((d) -> "Plugin: " + item)
+			
+			.item("Enable", () -> !plugin.isEnabled(), (i) ->
 			{
 				try
 				{
@@ -67,14 +53,10 @@ public class PluginDialog extends AbstractListDialog
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Enable failed.");
 				}
 				
-				showParentDialog();
-			}
-		});
-		
-		if (plugin.isEnabled()) dialogListItems.add(new DialogListItem("Disable")
-		{
-			@Override
-			public void onItemSelect()
+				i.getCurrentDialog().show();
+			})
+			
+			.item("Disable", () -> plugin.isEnabled(), (i) ->
 			{
 				try
 				{
@@ -86,15 +68,11 @@ public class PluginDialog extends AbstractListDialog
 					e.printStackTrace();
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Disable failed.");
 				}
-
-				showParentDialog();
-			}
-		});
-		
-		if (plugin.isEnabled()) dialogListItems.add(new DialogListItem("Re-enable")
-		{
-			@Override
-			public void onItemSelect()
+				
+				i.getCurrentDialog().show();
+			})
+			
+			.item("Re-enable", () -> plugin.isEnabled(), (i) ->
 			{
 				try
 				{
@@ -109,28 +87,18 @@ public class PluginDialog extends AbstractListDialog
 					e.printStackTrace();
 					player.sendMessage(Color.WHITE, "[MKPM] " + pluginFullName + " Re-enable failed.");
 				}
-
-				showParentDialog();
-			}
-		});
-		
-		if (plugin instanceof ConfigurablePlugin) dialogListItems.add(new DialogListItem("Configure")
-		{
-			@Override
-			public void onItemSelect()
+				
+				i.getCurrentDialog().show();
+			})
+			
+			.item("Configure", () -> plugin instanceof ConfigurablePlugin, (i) ->
 			{
 				ConfigurablePlugin wlPlugin = (ConfigurablePlugin) plugin;
 				player.sendMessage(Color.WHITE, "[MKPM] " + item + " Configuring...");
 				wlPlugin.configure(player);
-			}
-		});
-		
-		super.show();
-	}
-	
-	@Override
-	protected void onClickCancel()
-	{
-		showParentDialog();
+			})
+			
+			.onClickCancel((d) -> d.showParentDialog())
+			.build();
 	}
 }

@@ -1,9 +1,9 @@
-MK 的 Shoebill 插件管理器
+MK's Shoebill Plugin Manager
 =================
 
 
-警告
+Warnings
 -----------------
-请您遵守以下条款，否则请不要使用本项目或者本项目相关的任何代码：
-* 请您遵守 GPL v2 许可证所约定的事项，修改代码以后请保持开源。
-* 严禁移除所有版权和许可证信息。
+Please observe the following provisions, otherwise please do not use this project or related any code:
+* Please observe Apache V2 license.
+* Please do not remove all copyright and license information.
